@@ -1,0 +1,11 @@
+<p>dashboard works!</p>
+
+@if (listTodo$ | async; as listTodo) {
+    @if(  listTodo.length > 0) {
+        @for (item of listTodo; track item.id) {
+            <p><b>completed -</b> {{item.completed}} | <b>id -</b> {{item.id}} | <b>title -</b> {{item.title}}</p>
+        }
+    }
+}
+<button type="button" (click)="prevTodos()">Нздаб</button>
+<button type="button" (click)="nextTodos()">Вперде</button>
