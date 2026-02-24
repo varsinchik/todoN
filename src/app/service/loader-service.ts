@@ -3,5 +3,6 @@ import {Subject} from 'rxjs';
 
 @Injectable()
 export class LoaderService {
-  public load = new Subject<boolean>();
+  public loaderShow = new Subject<boolean>();
+  public loaderHide = new Subject<boolean>();
 }
