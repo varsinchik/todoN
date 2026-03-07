@@ -1,18 +1,9 @@
-import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
-import { RouterOutlet, RouterLinkWithHref } from '@angular/router';
-import { TodoService } from './service/todo-service';
-import { Observable, Subject } from 'rxjs';
-
-interface Todo {
-  completed: boolean,
-  userId: number,
-  id: number,
-  title: string
-}
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {RouterLink, RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLinkWithHref],
+  imports: [RouterLink, RouterOutlet],
   standalone: true,
   templateUrl: './app.html',
   styleUrl: './app.css',

@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
-import {DestroyRef, inject, Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {inject, Injectable} from '@angular/core';
 import {TodoRowItem} from '../interface/todo-interface';
+import {toSignal} from '@angular/core/rxjs-interop';
 
 
 @Injectable({
@@ -9,14 +9,10 @@ import {TodoRowItem} from '../interface/todo-interface';
 })
 export class TodoService {
 
-  private readonly path = 'https://jsonplaceholder.typicode.com/todos'
-  private destroyRef = inject(DestroyRef)
+  private _http = inject(HttpClient);
 
-  constructor(private _http: HttpClient) {
+  private readonly _path = 'https://jsonplaceholder.typicode.com/todos'
+  private readonly _getData$ = this._http.get<TodoRowItem[]>(this._path)
 
-  }
-
-  public getTodoList(): Observable<TodoRowItem[]> {
-    return this._http.get<TodoRowItem[]>(this.path, {params: {}})
-  }
+  public readonly todoData$$ = toSignal(this._getData$, {initialValue: []})
 }

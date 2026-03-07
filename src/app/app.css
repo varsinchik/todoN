@@ -1,32 +1,32 @@
 header {
-    background-color: aqua;
-    height: 28px;
+  background-color: aqua;
+  height: 28px;
 }
 
 aside {
-    width: 200px;
-    height: 300px;
-    border: 1px saddlebrown solid;
-    flex: 0 0 200px;
+  width: 200px;
+  height: 300px;
+  border: 1px saddlebrown solid;
+  flex: 0 0 200px;
 }
 
 .wrapper {
-    display: flex;
+  display: flex;
 }
 
 .aside__btn {
-    width: 100%;
-    background-color: rgb(240, 225, 207);
-    margin: 8px 0;
+  width: 100%;
+  background-color: rgb(240, 225, 207);
+  margin: 8px 0;
 
 }
 
 section {
-    flex: 1 1 100%;
-  
-    background-color: rgb(215, 250, 220);
+  flex: 1 1 100%;
+
+  background-color: rgb(215, 250, 220);
 }
 
 footer {
-    text-align: center;
+  text-align: center;
 }
