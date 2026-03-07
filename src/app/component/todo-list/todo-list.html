@@ -1,1 +1,30 @@
-<p>todo-list works!</p>
+@if (displayedTodos$$().length) {
+  <table>
+    <thead>
+    <tr>
+      <td><h2>ID</h2></td>
+      <td><h2>TITLE</h2></td>
+      <td><h2>COMPLETED</h2></td>
+    </tr>
+    </thead>
+
+    <tbody>
+      @for (todo of displayedTodos$$(); track todo.id) {
+        <tr>
+          <td>{{ todo.id }}</td>
+          <td>{{ todo.title }}</td>
+          <td>{{ todo.completed }}</td>
+        </tr>
+      }
+    </tbody>
+
+  </table>
+
+  <mat-paginator color="primary"
+                 [length]="totalLength()"
+                 [pageSizeOptions]="pSizeOptions"
+                 (page)="onChangePaginator($event)">
+  </mat-paginator>
+
+}
+<!--TODO лоадер и заглушку-->
