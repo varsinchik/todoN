@@ -1,12 +1,18 @@
-import {Component, computed, inject, signal} from '@angular/core';
-import {MatPaginatorIntl, MatPaginatorModule, PageEvent} from '@angular/material/paginator';
+import {Component, effect, inject, signal, viewChild} from '@angular/core';
+import {MatPaginator, MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
 import {TodoRowItem} from '../../interface/todo-interface';
 import {PaginationRus} from '../../service/paginationRus';
 import {TodoService} from '../../service/todo-service';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import {HttpClient} from '@angular/common/http';
+import {MatButton} from '@angular/material/button';
+
+
+type IRowNames = keyof TodoRowItem;
 
 @Component({
   selector: 'app-todo-list',
-  imports: [MatPaginatorModule],
+  imports: [MatPaginatorModule, MatTableModule, MatButton],
   standalone: true,
   providers: [{useClass: PaginationRus, provide: MatPaginatorIntl}],
   templateUrl: './todo-list.html',
@@ -14,29 +20,39 @@ import {TodoService} from '../../service/todo-service';
 })
 export class TodoList {
 
-  private readonly startSizeOption = 5
-  private readonly _data = inject(TodoService)
-  private pageIndex = signal(0)
-  private pageSize = signal(this.startSizeOption)
-  private allTodoPagData$$ = this._data.todoData$$
+  private readonly _data = inject(TodoService);
 
-  public totalLength = signal(this.allTodoPagData$$().length)
-  public pSizeOptions = [this.startSizeOption, 10, 33]
+  //TODO перенести в сервис
+  private _http = inject(HttpClient);
 
-  public displayedTodos$$ = computed(() => {
-    const data: TodoRowItem[] = this.allTodoPagData$$()
+  public isLoading = signal(false);
 
-    const start = this.pageIndex() * this.pageSize()
-    const end = start + this.pageSize()
-    return data.slice(start, end)
-  })
+  public readonly rowNames: IRowNames[] = [
+    'id',
+    'title',
+    "status",
+    "priority"
+  ];
+
+  public readonly paginationSize = [10, 30, 62]
+
+  public readonly dataSource = new MatTableDataSource<TodoRowItem>([]);
+  public readonly paginatorView = viewChild<MatPaginator>('paginator');
+
+  public readonly stateData$$ = this._data.state$$;
 
   constructor() {
-  }
 
-  onChangePaginator(event: PageEvent): void {
-    this.pageSize.set(event.pageSize);
-    this.pageIndex.set(event.pageIndex)
-  }
+    effect(() => {
+      this.dataSource.data = this.stateData$$().data;
+      this.dataSource.paginator = this.paginatorView();
+    })
+  };
+
+  //TODO перенести в сервис
+  public resetTodoData(): void {
+    this.isLoading.set(true)
+    this._http.post('http://localhost:4947/todos', {}, {params: {aaaaa: '11111', bbbbbb: '22222'}}).subscribe()
+  };
 
 }

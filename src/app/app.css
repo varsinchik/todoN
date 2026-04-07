@@ -23,10 +23,10 @@ aside {
 
 section {
   flex: 1 1 100%;
-
   background-color: rgb(215, 250, 220);
 }
 
 footer {
   text-align: center;
+  background-color: #f7fbee;
 }
