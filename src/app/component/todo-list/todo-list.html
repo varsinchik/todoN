@@ -1,30 +1,60 @@
-@if (displayedTodos$$().length) {
-  <table>
-    <thead>
-    <tr>
-      <td><h2>ID</h2></td>
-      <td><h2>TITLE</h2></td>
-      <td><h2>COMPLETED</h2></td>
-    </tr>
-    </thead>
+<section
+  [isLoading]="this.stateData$$().isLoading"
+  elementLoader
+  class="table-container mat-elevation-z10">
+  @if (!this.stateData$$().isLoading) {
+    @if (this.stateData$$().data.length > 0) {
+      <div class="table-overflow">
+        <mat-table
+          #table
+          [dataSource]="dataSource"
+        >
+          <!-- Id Column -->
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef> id</mat-header-cell>
+            <mat-cell *matCellDef="let todo">{{ todo.id }}</mat-cell>
+          </ng-container>
 
-    <tbody>
-      @for (todo of displayedTodos$$(); track todo.id) {
-        <tr>
-          <td>{{ todo.id }}</td>
-          <td>{{ todo.title }}</td>
-          <td>{{ todo.completed }}</td>
-        </tr>
-      }
-    </tbody>
+          <!-- Title Column -->
+          <ng-container matColumnDef="title">
+            <mat-header-cell *matHeaderCellDef> title</mat-header-cell>
+            <mat-cell *matCellDef="let todo">{{ todo.title }}</mat-cell>
+          </ng-container>
 
-  </table>
+          <!-- Status Column -->
+          <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef> status</mat-header-cell>
+            <mat-cell *matCellDef="let todo">{{ todo.status }}</mat-cell>
+          </ng-container>
 
-  <mat-paginator color="primary"
-                 [length]="totalLength()"
-                 [pageSizeOptions]="pSizeOptions"
-                 (page)="onChangePaginator($event)">
-  </mat-paginator>
+          <!-- Priority Column -->
+          <ng-container matColumnDef="priority">
+            <mat-header-cell *matHeaderCellDef> priority</mat-header-cell>
+            <mat-cell *matCellDef="let todo">{{ todo.priority }}</mat-cell>
+          </ng-container>
 
-}
-<!--TODO лоадер и заглушку-->
+          <mat-header-row *matHeaderRowDef="rowNames; sticky: true"></mat-header-row>
+          <mat-row *matRowDef="let todo; columns: rowNames;"></mat-row>
+
+        </mat-table>
+      </div>
+
+      <mat-paginator
+        #paginator
+        [pageSizeOptions]="paginationSize"
+      >
+      </mat-paginator>
+    } @else {
+      <div class="table-empty">
+        <h2>Извините, ни одной тудухуи нет? =(((</h2>
+
+        <!--TODO Реализовать создать-->
+        <h2>Создать?</h2>
+        <button matButton="outlined">Создать!</button>
+      </div>
+    }
+  }
+</section>
+
+<button matButton="tonal" (click)="resetTodoData()">СБРОС</button>
+
