@@ -1,57 +1,60 @@
+<section
+  [isLoading]="this.stateData$$().isLoading"
+  elementLoader
+  class="table-container mat-elevation-z10">
+  @if (!this.stateData$$().isLoading) {
+    @if (this.stateData$$().data.length > 0) {
+      <div class="table-overflow">
+        <mat-table
+          #table
+          [dataSource]="dataSource"
+        >
+          <!-- Id Column -->
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef> id</mat-header-cell>
+            <mat-cell *matCellDef="let todo">{{ todo.id }}</mat-cell>
+          </ng-container>
 
-  <section [class.skeleton]="this.stateData$$().isLoading"  class="table-container mat-elevation-z10">
-    @if (!this.stateData$$().isLoading ) {
-    @if ( dataSource.data.length > 0 ) {
+          <!-- Title Column -->
+          <ng-container matColumnDef="title">
+            <mat-header-cell *matHeaderCellDef> title</mat-header-cell>
+            <mat-cell *matCellDef="let todo">{{ todo.title }}</mat-cell>
+          </ng-container>
 
-    <div class="table-overflow">
-      <mat-table
-        #table
-        [dataSource]="dataSource"
+          <!-- Status Column -->
+          <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef> status</mat-header-cell>
+            <mat-cell *matCellDef="let todo">{{ todo.status }}</mat-cell>
+          </ng-container>
+
+          <!-- Priority Column -->
+          <ng-container matColumnDef="priority">
+            <mat-header-cell *matHeaderCellDef> priority</mat-header-cell>
+            <mat-cell *matCellDef="let todo">{{ todo.priority }}</mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="rowNames; sticky: true"></mat-header-row>
+          <mat-row *matRowDef="let todo; columns: rowNames;"></mat-row>
+
+        </mat-table>
+      </div>
+
+      <mat-paginator
+        #paginator
+        [pageSizeOptions]="paginationSize"
       >
-        <!-- Id Column -->
-        <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef> id</mat-header-cell>
-          <mat-cell *matCellDef="let todo">{{ todo.id }}</mat-cell>
-        </ng-container>
-
-        <!-- Title Column -->
-        <ng-container matColumnDef="title">
-          <mat-header-cell *matHeaderCellDef> title</mat-header-cell>
-          <mat-cell *matCellDef="let todo">{{ todo.title }}</mat-cell>
-        </ng-container>
-
-        <!-- Status Column -->
-        <ng-container matColumnDef="status">
-          <mat-header-cell *matHeaderCellDef> status</mat-header-cell>
-          <mat-cell *matCellDef="let todo">{{ todo.status }}</mat-cell>
-        </ng-container>
-
-        <!-- Priority Column -->
-        <ng-container matColumnDef="priority">
-          <mat-header-cell *matHeaderCellDef> priority</mat-header-cell>
-          <mat-cell *matCellDef="let todo">{{ todo.priority }}</mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="rowNames; sticky: true"></mat-header-row>
-        <mat-row *matRowDef="let todo; columns: rowNames;"></mat-row>
-
-      </mat-table>
-    </div>
-
-    <mat-paginator
-      #paginator
-      [pageSizeOptions]="paginationSize"
-    >
-    </mat-paginator>
-} @else {
+      </mat-paginator>
+    } @else {
       <div class="table-empty">
         <h2>Извините, ни одной тудухуи нет? =(((</h2>
 
         <!--TODO Реализовать создать-->
         <h2>Создать?</h2>
-        <button matButton="outlined" >Создать!</button>
+        <button matButton="outlined">Создать!</button>
       </div>
-    }}
-  </section>
-  <button  matButton="tonal" (click)="resetTodoData()">СБРОС</button>
+    }
+  }
+</section>
+
+<button matButton="tonal" (click)="resetTodoData()">СБРОС</button>
 

@@ -6,13 +6,14 @@ import {TodoService} from '../../service/todo-service';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {HttpClient} from '@angular/common/http';
 import {MatButton} from '@angular/material/button';
+import {ElementLoaderDirective} from '../../directive/element-loader/element-loader';
 
 
 type IRowNames = keyof TodoRowItem;
 
 @Component({
   selector: 'app-todo-list',
-  imports: [MatPaginatorModule, MatTableModule, MatButton],
+  imports: [MatPaginatorModule, MatTableModule, MatButton, ElementLoaderDirective],
   standalone: true,
   providers: [{useClass: PaginationRus, provide: MatPaginatorIntl}],
   templateUrl: './todo-list.html',

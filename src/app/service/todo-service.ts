@@ -22,5 +22,4 @@ export class TodoService {
     error: this._stateData.error(),
   }))
 
-
 }
